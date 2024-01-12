@@ -11,3 +11,6 @@ public class BoardDto {
     private String boardUpdateDate;
     private Long userNumber;
 }
+
+/* dto는 db랑 똑같이 만들고 다른건 vo로 만들자 */
+/* 여기는 userId가 없어서 BoardVo로 만들자 */

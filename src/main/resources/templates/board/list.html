@@ -6,35 +6,39 @@
   <title>게시판</title>
   <link rel="stylesheet" th:href="@{/css/board/list.css}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+  <script defer th:src="@{/js/board/list.js}"></script>
+
 </head>
 <body>
-<header class="header">
-  <div class="header-container">
 
-<!--    ////////////////////////-->
-    <a th:href="@{/board/list}" class="logo">LOGO</a>
-    <nav class="nav" th:if="${session.userNumber == null}">
-      <a th:href="@{/user/login}" class="nav-item login">로그인</a>
-      <a th:href="@{/user/join}" class="nav-item signup">회원가입</a>
-    </nav>
-<!--////////////////////////-->
-    <nav class="nav" th:unless="${session.userNumber == null}">
-      <!-- th:unless="${session.userNumber == null} 널이 아닐때 보여주기-->
-      <a th:href="@{/user/logout}" class="nav-item login">로그아웃</a>
-    </nav>
+
+<header th:replace="~{/fragments/header :: header }"></header>  <!--끼워 넣기 태그 자체를 교환하는 의미다. 태그가 header이 아니라
+div로 해도 자체적으로 header이 된다.
+
+th:include는 교체하라가 아니라 넣어라라는 의미다.
+-->
 
 
 
-  </div>
-</header>
+
 <div class="container">
   <h1 class="title">커뮤니티 게시판</h1>
   <div class="btn-wrap">
-    <button class="add-post-btn">새 게시글 작성</button>
+    <button class="add-post-btn" type="button">새 게시글 작성</button>
+    <!--버튼을 누르면 작성 페이지로 이동하자. 자바스크립트 클릭 이벤트를 걸자. list.js로 만듬-->
   </div>
   <div class="board">
+
+
+
     <!-- 게시물 샘플 -->
-    <div class="board-item">
+    <div class="board-item" th:each="board : ${boardList}">
+      <!--BoardController 파일의   @GetMapping("/list") 와 연결, 즉, boardList는 List<BoardVo> 다
+         -->
+
       <div class="board-img-box">
         <div class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
         <div class="board-item-info">
@@ -49,11 +53,15 @@
         </div>
       </div>
       <div class="board-item-text">
-        <h3 class="board-item-title">게시글 제목</h3>
-        <span class="board-item-author">작성자</span>
+        <h3 class="board-item-title" th:text="${board.boardTitle}">게시글 제목</h3> <!--board가 boardVo다 Vo에 있는 필드 이름을 써야함-->
+        <span class="board-item-author" th:text="${board.userId}">작성자</span>
       </div>
     </div>
     <!-- /게시물 샘플 -->
+
+
+
+
   </div>
 </div>
 <!-- 페이징 처리 -->
@@ -83,5 +91,9 @@
   </ul>
 </div>
 <!-- /페이징 처리 -->
+
+
+
+
 </body>
 </html>

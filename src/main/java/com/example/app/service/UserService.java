@@ -13,12 +13,12 @@ import java.util.Optional;
 public class UserService { /*서비스는 맵퍼를 항상 가져다 쓴다.*/
     private final UserMapper userMapper;
 
-    //    회원 정보 삽입
+    //  로그인  회원 정보 삽입
     public void register(UserDto userDto){
         userMapper.insert(userDto);
     }
 
-    //    회원 번호 조회
+    //   로그인 시 회원 번호 조회
     public Long findUserNumber(String userId, String userPassword){
         return userMapper.selectUserNumber(userId, userPassword)
                 .orElseThrow(() -> new IllegalStateException("일치하는 회원 정보 없음"));

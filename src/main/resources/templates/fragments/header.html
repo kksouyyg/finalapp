@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- fragment(조각)으로 등록을 한다. 등록할 때 이름을 지어준다.-->
+<!--우리가 만든 조각 이름은 header 이다.-->
+<header class="header" th:fragment="header"><!--header 끼워넣기-->
+  <div class="header-container">
+    <!--    ////////////////////////-->
+    <a th:href="@{/board/list}" class="logo">LOGO</a>
+    <nav class="nav" th:if="${session.userNumber == null}">
+      <a th:href="@{/user/login}" class="nav-item login">로그인</a>
+      <a th:href="@{/user/join}" class="nav-item signup">회원가입</a>
+    </nav>
+    <!--////////////////////////-->
+    <nav class="nav" th:unless="${session.userNumber == null}">
+      <!-- th:unless="${session.userNumber == null} 널이 아닐때 보여주기-->
+      <a th:href="@{/user/logout}" class="nav-item login">로그아웃</a>
+    </nav>
+  </div>
+</header>
+
+
+
+
+</body>
+</html>

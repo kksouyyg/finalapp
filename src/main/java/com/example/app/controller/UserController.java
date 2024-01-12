@@ -45,10 +45,29 @@ public class UserController {
     @PostMapping("/login")
     public RedirectView login(String userId, String userPassword,
                               HttpSession session){
-        Long userNumber = userService.findUserNumber(userId, userPassword);
-        /*여기에 아이디랑 패스워드 넣어야 한다. 그럼 받아야 한다. String userId, String userPassword 넣어준다.
+
+
+       /* Long userNumber = userService.findUserNumber(userId, userPassword);*/
+   /*여기에 아이디랑 패스워드 넣어야 한다. 그럼 받아야 한다. String userId, String userPassword 넣어준다.
         String userId, String userPassword는 login의 name와 동일한 이름이다.
         */
+
+
+        Long userNumber = null;
+        try {
+            userNumber = userService.findUserNumber(userId, userPassword);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return new RedirectView("/user/login") ;
+            /*로그인 페이지로 제요청 보내 */
+        } catch (Exception e){
+e.printStackTrace();
+        }
+
+/*ctrl+alt+t     유저서비스의 예외가 있어 화면에 오류가 난다 이걸 방지하기 위해 여기서 사용한다..*/
+
+
+
 
         /*로그인을 했다라고 하면 세션에 저장해야 한다. 나중에 요청이 들어오면 로그인을 했는지 않했는지 알수 있다. 즉 넘버를 세션에 넣어야 한다.
          *   HttpSession session와     session.setAttribute("userNumber", userNumber); 를 추가한다.
@@ -65,6 +84,10 @@ public class UserController {
 
         return new RedirectView("/board/list");
     }
+
+
+
+
 
 /*logout 하기*/
     @GetMapping("/logout")
